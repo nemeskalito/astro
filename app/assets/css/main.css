@@ -1,0 +1,116 @@
+/* ---------- Тёмная (ночная) тема — по умолчанию ---------- */
+:root,
+:root[data-theme='dark'] {
+  --bg: #1a1c26;
+  --bg-elev: #232633;
+  --bg-cell: #2a2e3d;
+  --border: #383d50;
+  --border-hover: #4a5068;
+
+  --text: #e8eaf2;
+  --text-dim: #a8adc0;
+  --text-faint: #7a8098;
+
+  --accent: #b8a8ff;
+  --accent-strong: #8b7fff;
+  --accent-soft: #2f2a4a;
+  --accent-glow: rgba(139, 127, 255, 0.28);
+
+  --gold: #f0c878;
+  --gold-glow: rgba(240, 200, 120, 0.32);
+
+  --button-bg: #8b7fff;
+  --button-text: #ffffff;
+  --button-hover: #a090ff;
+
+  --error: #ff7a7a;
+
+  /* Круг */
+  --wheel-sector: #2f3344;
+  --wheel-sector-stroke: #4a5068;
+  --wheel-sign-symbol: #b0b6cc;
+  --wheel-sign-symbol-active: #ffffff;
+  --wheel-tick: #6a7090;
+  --wheel-tick-major: #8a90b0;
+  --wheel-inner-circle: #6a7090;
+  --wheel-outer-ring: #5a6080;
+  --wheel-axis: #6a7090;
+  --wheel-axis-label: #8a90b0;
+  --wheel-center-dot: #9aa0b8;
+
+  --wheel-active-1: #3d3660;
+  --wheel-active-2: #4f4578;
+
+  --wheel-line-start: #9cd8ff;
+  --wheel-line-end: #ffd88a;
+
+  --radius: 10px;
+  --radius-sm: 7px;
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* ---------- Светлая (дневная) тема ---------- */
+:root[data-theme='light'] {
+  --bg: #f4f2ec;
+  --bg-elev: #ffffff;
+  --bg-cell: #ffffff;
+  --border: #dcd6c8;
+  --border-hover: #b8b0a0;
+
+  --text: #2a2a35;
+  --text-dim: #5a5a68;
+  --text-faint: #8a8a98;
+
+  --accent: #6a4fd6;
+  --accent-strong: #5a3ec4;
+  --accent-soft: #e6defc;
+  --accent-glow: rgba(106, 79, 214, 0.18);
+
+  --gold: #b8873a;
+  --gold-glow: rgba(184, 135, 58, 0.25);
+
+  --button-bg: #6a4fd6;
+  --button-text: #ffffff;
+  --button-hover: #5a3ec4;
+
+  --error: #d04040;
+
+  /* Круг — светлый */
+  --wheel-sector: #efece2;
+  --wheel-sector-stroke: #d8d2c4;
+  --wheel-sign-symbol: #6a6a78;
+  --wheel-sign-symbol-active: #2a2a35;
+  --wheel-tick: #c9c2b2;
+  --wheel-tick-major: #a8a090;
+  --wheel-inner-circle: #c9c2b2;
+  --wheel-outer-ring: #d8d2c4;
+  --wheel-axis: #c9c2b2;
+  --wheel-axis-label: #9a9aa8;
+  --wheel-center-dot: #9a9aa8;
+
+  --wheel-active-1: #ece2fc;
+  --wheel-active-2: #d8c6f8;
+
+  --wheel-line-start: #4a9de0;
+  --wheel-line-end: #d18a2a;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 14px;
+  line-height: 1.5;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+:root[data-theme='dark'] body {
+  background:
+    radial-gradient(ellipse at top, #2a2540 0%, #1a1c26 65%),
+    var(--bg);
+}
