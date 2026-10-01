@@ -43,7 +43,7 @@ function onBlur(field: 'deg' | 'min' | 'sec') {
   <div class="degree-input">
     <div class="group">
       <input
-        :value="degStr"
+        :value="degStr" aria-label="Градусы"
         inputmode="numeric" maxlength="2" placeholder="0"
         @input="onInput($event, 'deg', minEl)"
         @blur="onBlur('deg')"
@@ -53,7 +53,7 @@ function onBlur(field: 'deg' | 'min' | 'sec') {
 
     <div class="group">
       <input
-        ref="minEl" :value="minStr"
+        ref="minEl" :value="minStr" aria-label="Минуты"
         inputmode="numeric" maxlength="2" placeholder="00"
         @input="onInput($event, 'min', secEl)"
         @blur="onBlur('min')"
@@ -63,7 +63,7 @@ function onBlur(field: 'deg' | 'min' | 'sec') {
 
     <div class="group">
       <input
-        ref="secEl" :value="secStr"
+        ref="secEl" :value="secStr" aria-label="Секунды"
         inputmode="numeric" maxlength="2" placeholder="00"
         @input="onInput($event, 'sec')"
         @blur="onBlur('sec')"
@@ -84,25 +84,25 @@ function onBlur(field: 'deg' | 'min' | 'sec') {
 .group { display: flex; align-items: baseline; gap: 3px; }
 
 input {
-  background: var(--bg-cell);
-  border: 1px solid var(--border);
+  background: var(--field-bg);
+  border: 1px solid var(--field-border);
   border-radius: var(--radius-sm);
   color: var(--text);
-  font-size: 14px;
-  font-family: inherit;
-  padding: 9px 0;
-  width: 54px;
+  font: 500 15px/1.2 var(--font);
+  padding: 13px 0;
+  width: 60px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.18);
   text-align: center;
   outline: none;
   transition: border-color 0.15s, box-shadow 0.15s, background 0.3s ease, color 0.3s ease;
 }
 
-input:focus {
+input:focus-visible {
   border-color: var(--accent-strong);
   box-shadow: 0 0 0 3px var(--accent-glow);
 }
 
 input::placeholder { color: var(--text-faint); }
 
-.unit { color: var(--text-faint); font-size: 14px; }
+.unit { color: var(--text-dim); font-size: 20px; line-height: 1; }
 </style>

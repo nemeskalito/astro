@@ -1,116 +1,181 @@
 /* ---------- Тёмная (ночная) тема — по умолчанию ---------- */
 :root,
 :root[data-theme='dark'] {
-  --bg: #1a1c26;
+  --bg: #12131c;
   --bg-elev: #232633;
   --bg-cell: #2a2e3d;
   --border: #383d50;
   --border-hover: #4a5068;
+  --icon-filter: invert(1);
 
-  --text: #e8eaf2;
-  --text-dim: #a8adc0;
-  --text-faint: #7a8098;
+  --text: #eceef7;
+  --text-dim: #aab0c6;
+  --text-faint: #7f869e;
 
   --accent: #b8a8ff;
   --accent-strong: #8b7fff;
   --accent-soft: #2f2a4a;
-  --accent-glow: rgba(139, 127, 255, 0.28);
+  --accent-glow: rgba(139, 127, 255, 0.32);
 
   --gold: #f0c878;
-  --gold-glow: rgba(240, 200, 120, 0.32);
+  --gold-glow: rgba(240, 200, 120, 0.35);
 
-  --button-bg: #8b7fff;
-  --button-text: #ffffff;
-  --button-hover: #a090ff;
+  --error: #ff8a8a;
 
-  --error: #ff7a7a;
+  /* Стекло */
+  --glass: rgba(34, 37, 52, 0.62);
+  --glass-border: rgba(255, 255, 255, 0.09);
+  --glass-hi: rgba(255, 255, 255, 0.12);
+  --field-bg: rgba(255, 255, 255, 0.045);
+  --field-border: rgba(255, 255, 255, 0.11);
 
-  /* Круг */
-  --wheel-sector: #2f3344;
-  --wheel-sector-stroke: #4a5068;
-  --wheel-sign-symbol: #b0b6cc;
-  --wheel-sign-symbol-active: #ffffff;
-  --wheel-tick: #6a7090;
-  --wheel-tick-major: #8a90b0;
-  --wheel-inner-circle: #6a7090;
-  --wheel-outer-ring: #5a6080;
-  --wheel-axis: #6a7090;
-  --wheel-axis-label: #8a90b0;
-  --wheel-center-dot: #9aa0b8;
+  /* Глянцевая кнопка */
+  --btn-top: #b3a7ff;
+  --btn-bottom: #6650ee;
+  --btn-edge: #3c2fa8;
+  --btn-shadow: rgba(110, 90, 245, 0.55);
+  --btn-text: #ffffff;
 
-  --wheel-active-1: #3d3660;
-  --wheel-active-2: #4f4578;
+  /* Небо */
+  --sky-glow: rgba(120, 100, 255, 0.28);
+  --sky-glow-2: rgba(240, 200, 120, 0.1);
+  --stars: 0.7;
 
-  --wheel-line-start: #9cd8ff;
-  --wheel-line-end: #ffd88a;
-
-  --radius: 10px;
-  --radius-sm: 7px;
-  --font: 'Inter', system-ui, -apple-system, sans-serif;
+  --radius: 22px;
+  --radius-sm: 12px;
+  --font: 'Onest', system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 
 /* ---------- Светлая (дневная) тема ---------- */
 :root[data-theme='light'] {
-  --bg: #f4f2ec;
+  --bg: #f5f3fb;
   --bg-elev: #ffffff;
   --bg-cell: #ffffff;
   --border: #dcd6c8;
   --border-hover: #b8b0a0;
+  --icon-filter: invert(0);
 
-  --text: #2a2a35;
-  --text-dim: #5a5a68;
-  --text-faint: #8a8a98;
+  --text: #25253a;
+  --text-dim: #565670;
+  --text-faint: #858aa0;
 
   --accent: #6a4fd6;
   --accent-strong: #5a3ec4;
   --accent-soft: #e6defc;
-  --accent-glow: rgba(106, 79, 214, 0.18);
+  --accent-glow: rgba(106, 79, 214, 0.22);
 
   --gold: #b8873a;
-  --gold-glow: rgba(184, 135, 58, 0.25);
-
-  --button-bg: #6a4fd6;
-  --button-text: #ffffff;
-  --button-hover: #5a3ec4;
+  --gold-glow: rgba(184, 135, 58, 0.28);
 
   --error: #d04040;
 
-  /* Круг — светлый */
-  --wheel-sector: #efece2;
-  --wheel-sector-stroke: #d8d2c4;
-  --wheel-sign-symbol: #6a6a78;
-  --wheel-sign-symbol-active: #2a2a35;
-  --wheel-tick: #c9c2b2;
-  --wheel-tick-major: #a8a090;
-  --wheel-inner-circle: #c9c2b2;
-  --wheel-outer-ring: #d8d2c4;
-  --wheel-axis: #c9c2b2;
-  --wheel-axis-label: #9a9aa8;
-  --wheel-center-dot: #9a9aa8;
+  --glass: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(90, 62, 196, 0.12);
+  --glass-hi: rgba(255, 255, 255, 0.9);
+  --field-bg: rgba(255, 255, 255, 0.9);
+  --field-border: rgba(90, 62, 196, 0.16);
 
-  --wheel-active-1: #ece2fc;
-  --wheel-active-2: #d8c6f8;
+  --btn-top: #9f8bf5;
+  --btn-bottom: #5a3ec4;
+  --btn-edge: #43299f;
+  --btn-shadow: rgba(90, 62, 196, 0.4);
 
-  --wheel-line-start: #4a9de0;
-  --wheel-line-end: #d18a2a;
+  --sky-glow: rgba(150, 120, 255, 0.24);
+  --sky-glow-2: rgba(240, 190, 110, 0.18);
+  --stars: 0;
 }
 
 * { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+}
 
 body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
   font-family: var(--font);
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 16px;
+  line-height: 1.55;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   transition: background 0.3s ease, color 0.3s ease;
 }
 
-:root[data-theme='dark'] body {
+h1, h2, h3, p { margin: 0; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ---------- Фон: небо со свечением и звёздами ---------- */
+.sky {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
   background:
-    radial-gradient(ellipse at top, #2a2540 0%, #1a1c26 65%),
+    radial-gradient(60% 50% at 50% -8%, var(--sky-glow), transparent 70%),
+    radial-gradient(40% 40% at 92% 32%, var(--sky-glow-2), transparent 70%),
     var(--bg);
+}
+
+.sky::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: var(--stars);
+  background-image:
+    radial-gradient(1px 1px at 24px 36px, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 110px 90px, #d9d2ff, transparent),
+    radial-gradient(1px 1px at 180px 24px, #fff, transparent),
+    radial-gradient(1px 1px at 70px 170px, #ffeccc, transparent),
+    radial-gradient(1.5px 1.5px at 200px 150px, #fff, transparent);
+  background-size: 240px 200px;
+  mask-image: linear-gradient(180deg, #000 0%, transparent 85%);
+}
+
+/* ---------- Утилиты лендинга ---------- */
+.container {
+  width: min(1120px, 100% - 40px);
+  margin-inline: auto;
+}
+
+.glass {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  backdrop-filter: blur(18px) saturate(1.25);
+  -webkit-backdrop-filter: blur(18px) saturate(1.25);
+  box-shadow:
+    inset 0 1px 0 var(--glass-hi),
+    0 30px 70px -40px rgba(0, 0, 0, 0.55);
+}
+
+.section { padding-block: 72px; }
+
+.section-head {
+  max-width: 560px;
+  margin-bottom: 36px;
+}
+
+.section-head h2 {
+  font-size: clamp(26px, 4vw, 36px);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 10px;
+}
+
+.section-head p { color: var(--text-dim); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
 }

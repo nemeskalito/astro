@@ -4,114 +4,170 @@ import { MONTHS } from '~/types/astro'
 interface DateValue { day: number; month: number; year: number }
 const model = defineModel<DateValue>({ required: true })
 
-const dayStr = ref(String(model.value.day).padStart(2, '0'))
-const monthStr = ref(String(model.value.month + 1).padStart(2, '0'))
-const yearStr = ref(String(model.value.year))
+const YEAR_MIN = 1950
+const YEAR_MAX = 2070
+const CUSTOM = 'custom'   // значение-заглушка для <option>
 
-const dayEl = ref<HTMLInputElement>()
-const monthEl = ref<HTMLInputElement>()
-const yearEl = ref<HTMLInputElement>()
+/** Максимум дней в текущем месяце с учётом года */
+const maxDay = computed(() => {
+  const y = model.value.year || 2000
+  const m = model.value.month
+  return new Date(y, m + 1, 0).getDate()
+})
 
-watch([dayStr, monthStr, yearStr], () => {
-  const d = Number(dayStr.value)
-  const m = Number(monthStr.value)
-  const y = Number(yearStr.value)
+const days = computed(() =>
+  Array.from({ length: maxDay.value }, (_, i) => i + 1)
+)
 
-  if (d >= 1 && d <= 31 && m >= 1 && m <= 12 && y >= 1900 && y <= 2200) {
-    const maxDay = new Date(y, m, 0).getDate()
-    model.value = { day: Math.min(d, maxDay), month: m - 1, year: y }
+/** Список годов для <select> */
+const years = Array.from(
+  { length: YEAR_MAX - YEAR_MIN + 1 },
+  (_, i) => YEAR_MIN + i
+)
+
+/**
+ * Если год в модели вне диапазона [1950, 2030] — включаем режим ручного ввода.
+ * Иначе — показываем список.
+ */
+const customMode = ref(
+  model.value.year < YEAR_MIN || model.value.year > YEAR_MAX
+)
+
+/** Значение для <select>: либо год, либо 'custom' */
+const selectValue = computed<string | number>({
+  get() {
+    return customMode.value ? CUSTOM : model.value.year
+  },
+  set(v) {
+    if (v === CUSTOM) {
+      customMode.value = true
+    } else {
+      customMode.value = false
+      model.value.year = Number(v)
+    }
   }
 })
 
-function onInput(e: Event, field: 'day' | 'month' | 'year', next?: HTMLInputElement) {
+/** Ручной ввод года — как строка */
+const yearStr = ref(String(model.value.year))
+
+watch(yearStr, (v) => {
+  const n = Number(v.replace(/\D/g, ''))
+  if (n >= 1 && n <= 9999) model.value.year = n
+})
+
+function onYearInput(e: Event) {
   const el = e.target as HTMLInputElement
-  el.value = el.value.replace(/\D/g, '')
-  if (field === 'day') dayStr.value = el.value
-  if (field === 'month') monthStr.value = el.value
-  if (field === 'year') yearStr.value = el.value
-  const max = field === 'year' ? 4 : 2
-  if (el.value.length >= max && next) next.focus()
+  el.value = el.value.replace(/\D/g, '').slice(0, 4)
+  yearStr.value = el.value
 }
 
-function onBlur(field: 'day' | 'month' | 'year') {
-  if (field === 'day' && !dayStr.value) dayStr.value = '01'
-  if (field === 'month' && !monthStr.value) monthStr.value = '01'
-  if (field === 'year' && yearStr.value.length < 4) yearStr.value = '2000'
+function onYearBlur() {
+  if (!yearStr.value) {
+    yearStr.value = String(YEAR_MIN)
+    model.value.year = YEAR_MIN
+  }
 }
+
+/** Если пользователь вернулся в диапазон — выходим из ручного режима */
+watch(
+  () => model.value.year,
+  (y) => {
+    if (y >= YEAR_MIN && y <= YEAR_MAX) {
+      customMode.value = false
+      // синхронизируем строку
+      yearStr.value = String(y)
+    }
+  }
+)
+
+/** Подрезаем день, если он не влезает в новый месяц */
+watch(maxDay, (max) => {
+  if (model.value.day > max) model.value.day = max
+})
 </script>
 
 <template>
   <div class="date-input">
-    <div class="fields">
+    <UiSelect v-model="model.day" aria-label="День">
+      <option v-for="d in days" :key="d" :value="d">{{ d }}</option>
+    </UiSelect>
+
+    <UiSelect v-model="model.month" aria-label="Месяц">
+      <option v-for="(name, i) in MONTHS" :key="name" :value="i">{{ name }}</option>
+    </UiSelect>
+
+    <!-- Год: либо список, либо ручной ввод -->
+    <UiSelect v-if="!customMode" v-model="selectValue" aria-label="Год">
+      <option :value="CUSTOM">Другой год</option>
+      <option v-for="y in years" :key="y" :value="y">{{ y }}</option>
+    </UiSelect>
+
+    <div v-else class="year-wrap">
       <input
-        ref="dayEl" :value="dayStr"
-        inputmode="numeric" maxlength="2" placeholder="ДД"
-        @input="onInput($event, 'day', monthEl)"
-        @blur="onBlur('day')"
+        :value="yearStr"
+        inputmode="numeric"
+        maxlength="4"
+        placeholder="ГГГГ"
+        aria-label="Год"
+        class="year-input"
+        @input="onYearInput"
+        @blur="onYearBlur"
       />
-      <span class="sep">.</span>
-      <input
-        ref="monthEl" :value="monthStr"
-        inputmode="numeric" maxlength="2" placeholder="ММ"
-        @input="onInput($event, 'month', yearEl)"
-        @blur="onBlur('month')"
-      />
-      <span class="sep">.</span>
-      <input
-        ref="yearEl" :value="yearStr"
-        inputmode="numeric" maxlength="4" placeholder="ГГГГ"
-        @input="onInput($event, 'year')"
-        @blur="onBlur('year')"
-      />
+      <button
+        type="button"
+        class="back-btn"
+        aria-label="Вернуться к списку годов"
+        @click="customMode = false; model.year = YEAR_MIN; yearStr = String(YEAR_MIN)"
+      >✕</button>
     </div>
-    <div class="month-hint">{{ MONTHS[model.month] }}</div>
   </div>
 </template>
 
 <style scoped>
-.date-input { display: flex; flex-direction: column; gap: 4px; }
-
-.fields {
-  display: flex;
+.date-input {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr) 118px;
+  gap: 8px;
   align-items: center;
-  gap: 5px;
-  font-variant-numeric: tabular-nums;
 }
 
-input {
-  background: var(--bg-cell);
-  border: 1px solid var(--border);
+.year-wrap { position: relative; }
+
+.year-input {
+  width: 100%;
+  background: var(--field-bg);
+  border: 1px solid var(--accent-strong);
   border-radius: var(--radius-sm);
   color: var(--text);
-  font-size: 14px;
-  font-family: inherit;
-  padding: 9px 0;
+  font: 500 15px/1.2 var(--font);
+  padding: 13px 30px 13px 0;
   text-align: center;
   outline: none;
-  transition: border-color 0.15s, box-shadow 0.15s, background 0.3s ease, color 0.3s ease;
   font-variant-numeric: tabular-nums;
-}
-
-input:focus {
-  border-color: var(--accent-strong);
   box-shadow: 0 0 0 3px var(--accent-glow);
 }
 
-input::placeholder { color: var(--text-faint); }
+.year-input::placeholder { color: var(--text-faint); }
 
-.fields input:nth-child(1) { width: 56px; }
-.fields input:nth-child(3) { width: 56px; }
-.fields input:nth-child(5) { width: 76px; }
-
-.sep { color: var(--text-faint); font-size: 15px; }
-
-.month-hint {
-  font-size: 11px;
-  color: var(--accent);
-  opacity: 0.7;
-  text-transform: capitalize;
-  letter-spacing: 0.3px;
-  padding-left: 2px;
-  min-height: 14px;
+.back-btn {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--text-faint);
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: color 0.15s, background 0.15s;
 }
+
+.back-btn:hover { color: var(--text); background: var(--field-bg); }
 </style>

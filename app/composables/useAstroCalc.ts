@@ -6,14 +6,10 @@ const SECONDS_PER_DEGREE = 3600
 const SECONDS_PER_CIRCLE = 360 * SECONDS_PER_DEGREE
 const SECONDS_PER_SIGN = 30 * SECONDS_PER_DEGREE
 
-/** DMS → секунды дуги */
 export function dmsToSeconds(dms: DMS): number {
-  return dms.degrees * SECONDS_PER_DEGREE
-    + dms.minutes * 60
-    + dms.seconds
+  return dms.degrees * SECONDS_PER_DEGREE + dms.minutes * 60 + dms.seconds
 }
 
-/** Секунды дуги → DMS (с нормализацией переносов) */
 export function secondsToDms(totalSeconds: number): DMS {
   const s = Math.round(totalSeconds)
   return {
@@ -23,7 +19,6 @@ export function secondsToDms(totalSeconds: number): DMS {
   }
 }
 
-/** Разница в днях между двумя датами (UTC, без времени) */
 export function daysBetween(
   birth: { day: number; month: number; year: number },
   event: { day: number; month: number; year: number }
@@ -34,7 +29,43 @@ export function daysBetween(
   return Math.round((eventUtc - birthUtc) / MS_PER_DAY)
 }
 
-/** Основной расчёт */
+function calculateDirect(
+  startSeconds: number,
+  days: number,
+  signIndex: number
+): { withinSign: number; signIndex: number } {
+  const traveled = (startSeconds * days) / TROPICAL_YEAR
+  let total = startSeconds + traveled
+
+  total = ((total % SECONDS_PER_CIRCLE) + SECONDS_PER_CIRCLE) % SECONDS_PER_CIRCLE
+
+  const signShift = Math.floor(total / SECONDS_PER_SIGN)
+  const withinSign = total - signShift * SECONDS_PER_SIGN
+  const newSignIndex = ((signIndex + signShift) % 12 + 12) % 12
+
+  return { withinSign, signIndex: newSignIndex }
+}
+
+function calculateReverse(
+  startSeconds: number,
+  days: number,
+  signIndex: number
+): { withinSign: number; signIndex: number } {
+  const stepBack = SECONDS_PER_SIGN - startSeconds
+  const traveled = (stepBack * days) / TROPICAL_YEAR
+  let total = startSeconds - traveled
+
+  // Оставляем в диапазоне (−360, 0]
+  while (total <= -SECONDS_PER_CIRCLE) total += SECONDS_PER_CIRCLE
+  while (total > 0) total -= SECONDS_PER_CIRCLE
+
+  const signBack = Math.ceil(-total / SECONDS_PER_SIGN)
+  const withinSign = total + signBack * SECONDS_PER_SIGN
+  const newSignIndex = ((signIndex - signBack) % 12 + 12) % 12
+
+  return { withinSign, signIndex: newSignIndex }
+}
+
 export function calculatePosition(
   input: BirthInput,
   eventDate: { day: number; month: number; year: number },
@@ -47,37 +78,20 @@ export function calculatePosition(
   }
 
   const startSeconds = dmsToSeconds(input.position)
+  const signIndex = ZODIAC.indexOf(input.sign)
 
-  // Знаковый индекс изначального положения
-  let signIndex = ZODIAC.indexOf(input.sign)
-
-  // 1. Пройденный путь: старт * days / 365.24  (прямой метод)
-  //    для обратного — та же формула, но с обратным знаком
-  const traveledSeconds =
-    (startSeconds * days) / TROPICAL_YEAR * (method === 'direct' ? 1 : -1)
-
-  // 2. Сумма
-  let totalSeconds = startSeconds + traveledSeconds
-
-  // 3. Отбрасываем лишние циклы по 360°
-  totalSeconds = ((totalSeconds % SECONDS_PER_CIRCLE) + SECONDS_PER_CIRCLE)
-    % SECONDS_PER_CIRCLE
-
-  // 4. Отбрасываем лишние тридцатки → сдвигаем знак
-  const signShift = Math.floor(totalSeconds / SECONDS_PER_SIGN)
-  const withinSign = totalSeconds - signShift * SECONDS_PER_SIGN
-
-  // 5. Итоговый знак
-  signIndex = ((signIndex + signShift) % 12 + 12) % 12
+  const { withinSign, signIndex: newSignIndex } =
+    method === 'direct'
+      ? calculateDirect(startSeconds, days, signIndex)
+      : calculateReverse(startSeconds, days, signIndex)
 
   return {
     planet: input.planet,
-    sign: ZODIAC[signIndex] as ZodiacSign,
+    sign: ZODIAC[newSignIndex] as ZodiacSign,
     position: secondsToDms(withinSign)
   }
 }
 
-/** Форматирование: "8° 12' 20''" */
 export function formatDms(dms: DMS): string {
-  return `${dms.degrees}° ${String(dms.minutes).padStart(2, '0')}' ${String(dms.seconds).padStart(2, '0')}''`
+  return `${dms.degrees}°\u2009${String(dms.minutes).padStart(2, '0')}′\u2009${String(dms.seconds).padStart(2, '0')}″`
 }
