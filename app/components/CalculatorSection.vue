@@ -34,65 +34,66 @@ function onCalculate() {
 </script>
 
 <template>
-  <section id="calculator" class="section container" aria-labelledby="calc-title">
-    <div class="section-head">
-      <h2 id="calc-title">Калькулятор</h2>
-      <p>Заполните данные слева — результат появится справа.</p>
-    </div>
+  <section class="calc glass" aria-labelledby="calc-title">
+    <h1 id="calc-title" class="title">Астрологический калькулятор</h1>
 
-    <div class="calc">
-      <form class="form glass" @submit.prevent="onCalculate">
-        <FormField label="Метод расчёта" class="span-2">
-          <MethodSelector v-model="method" />
-        </FormField>
+    <ResultDisplay :result="result" :error="error" />
 
-        <FormField label="Дата рождения" class="span-2">
-          <DateInput v-model="birth" />
-        </FormField>
+    <form class="form" @submit.prevent="onCalculate">
+      <MethodSelector v-model="method" />
 
-        <FormField label="Дата события" class="span-2">
-          <DateInput v-model="event" />
-        </FormField>
+      <FormField label="Дата рождения">
+        <DateInput v-model="birth" />
+      </FormField>
 
+      <FormField label="Дата события">
+        <DateInput v-model="event" />
+      </FormField>
+
+      <div class="pair">
         <FormField label="Планета">
           <PlanetSelect v-model="planetIdx" />
         </FormField>
-
-        <FormField label="Знак положения">
+        <FormField label="Знак">
           <ZodiacSelect v-model="signIdx" />
         </FormField>
+      </div>
 
-        <FormField label="Градус положения" class="span-2">
-          <DegreeInput v-model="position" />
-        </FormField>
+      <FormField label="Градус положения">
+        <DegreeInput v-model="position" />
+      </FormField>
 
-        <UiButton type="submit" size="lg" class="span-2 submit">Рассчитать положение</UiButton>
-      </form>
-
-      <ResultDisplay :result="result" :error="error" class="result-col" />
-    </div>
+      <UiButton type="submit" size="lg" class="submit">Рассчитать</UiButton>
+    </form>
   </section>
 </template>
 
 <style scoped>
-.calc { display: grid; gap: 20px; align-items: start; }
+.calc {
+  width: min(520px, 100%);
+  padding: 26px;
+  display: grid;
+  gap: 20px;
+}
 
-.form {
+.title {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.form { display: grid; gap: 20px; }
+
+.pair {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 22px 16px;
-  padding: 28px;
+  gap: 12px;
 }
 
-.span-2 { grid-column: 1 / -1; }
-.submit { margin-top: 6px; }
+.submit { margin-top: 4px; width: 100%; }
 
-@media (max-width: 560px) {
-  .form { grid-template-columns: 1fr; padding: 20px; }
-}
-
-@media (min-width: 960px) {
-  .calc { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); }
-  .result-col { position: sticky; top: 100px; }
+@media (max-width: 480px) {
+  .calc { padding: 20px 16px; }
 }
 </style>

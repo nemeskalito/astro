@@ -91,7 +91,7 @@ input {
   font: 500 15px/1.2 var(--font);
   padding: 13px 0;
   width: 60px;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.18);
+  box-shadow: inset 0 1px 2px rgba(20, 10, 70, 0.10);
   text-align: center;
   outline: none;
   transition: border-color 0.15s, box-shadow 0.15s, background 0.3s ease, color 0.3s ease;

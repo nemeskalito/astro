@@ -28,6 +28,10 @@
   --glass-hi: rgba(255, 255, 255, 0.12);
   --field-bg: rgba(255, 255, 255, 0.045);
   --field-border: rgba(255, 255, 255, 0.11);
+  --pop-bg: #1d2031;
+  --seg-bg: rgba(0, 0, 0, 0.26);
+  --seg-thumb: linear-gradient(180deg, #4b5072, #393d59);
+  --display-bg: rgba(0, 0, 0, 0.28);
 
   /* Глянцевая кнопка */
   --btn-top: #b3a7ff;
@@ -39,7 +43,7 @@
   /* Небо */
   --sky-glow: rgba(120, 100, 255, 0.28);
   --sky-glow-2: rgba(240, 200, 120, 0.1);
-  --stars: 0.7;
+  --stars: 0.5;
 
   --radius: 22px;
   --radius-sm: 12px;
@@ -74,6 +78,10 @@
   --glass-hi: rgba(255, 255, 255, 0.9);
   --field-bg: rgba(255, 255, 255, 0.9);
   --field-border: rgba(90, 62, 196, 0.16);
+  --pop-bg: #ffffff;
+  --seg-bg: rgba(90, 62, 196, 0.08);
+  --seg-thumb: #ffffff;
+  --display-bg: rgba(90, 62, 196, 0.06);
 
   --btn-top: #9f8bf5;
   --btn-bottom: #5a3ec4;
@@ -86,11 +94,6 @@
 }
 
 * { box-sizing: border-box; }
-
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 88px;
-}
 
 body {
   margin: 0;
@@ -138,12 +141,7 @@ h1, h2, h3, p { margin: 0; }
   mask-image: linear-gradient(180deg, #000 0%, transparent 85%);
 }
 
-/* ---------- Утилиты лендинга ---------- */
-.container {
-  width: min(1120px, 100% - 40px);
-  margin-inline: auto;
-}
-
+/* ---------- Стеклянная панель ---------- */
 .glass {
   background: var(--glass);
   border: 1px solid var(--glass-border);
@@ -155,25 +153,7 @@ h1, h2, h3, p { margin: 0; }
     0 30px 70px -40px rgba(0, 0, 0, 0.55);
 }
 
-.section { padding-block: 72px; }
-
-.section-head {
-  max-width: 560px;
-  margin-bottom: 36px;
-}
-
-.section-head h2 {
-  font-size: clamp(26px, 4vw, 36px);
-  font-weight: 650;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-  margin-bottom: 10px;
-}
-
-.section-head p { color: var(--text-dim); }
-
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation: none !important;
     transition-duration: 0.01ms !important;

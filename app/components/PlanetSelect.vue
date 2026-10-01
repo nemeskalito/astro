@@ -1,25 +1,16 @@
 <script setup lang="ts">
-import { PLANETS, PLANET_ICONS, getPlanet } from '~/types/astro'
+import { PLANETS, PLANET_ICONS } from '~/types/astro'
+import type { SelectOption } from '~/types/ui'
 
 const model = defineModel<number>({ required: true })
+
+const options: SelectOption<number>[] = PLANETS.map((planet, i) => ({
+  value: i,
+  label: planet,
+  icon: PLANET_ICONS[planet]
+}))
 </script>
 
 <template>
-  <div class="row">
-    <img :src="PLANET_ICONS[getPlanet(model)]" alt="" width="32" height="32" class="icon" />
-    <UiSelect v-model="model" aria-label="Планета">
-      <option v-for="(planet, i) in PLANETS" :key="planet" :value="i">{{ planet }}</option>
-    </UiSelect>
-  </div>
+  <UiSelect v-model="model" :options="options" aria-label="Планета" />
 </template>
-
-<style scoped>
-.row { display: flex; align-items: center; gap: 10px; }
-
-.icon {
-  flex-shrink: 0;
-  object-fit: contain;
-  filter: var(--icon-filter, invert(1));
-  transition: filter 0.3s ease;
-}
-</style>

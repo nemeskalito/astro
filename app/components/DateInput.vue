@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { MONTHS } from '~/types/astro'
+import type { SelectOption } from '~/types/ui'
 
 interface DateValue { day: number; month: number; year: number }
 const model = defineModel<DateValue>({ required: true })
@@ -85,23 +86,30 @@ watch(
 watch(maxDay, (max) => {
   if (model.value.day > max) model.value.day = max
 })
+
+const dayOptions = computed<SelectOption<number>[]>(() =>
+  days.value.map(d => ({ value: d, label: String(d) }))
+)
+
+const monthOptions: SelectOption<number>[] = MONTHS.map((name, i) => ({
+  value: i,
+  label: name.charAt(0).toUpperCase() + name.slice(1)
+}))
+
+const yearOptions: SelectOption<string | number>[] = [
+  { value: CUSTOM, label: 'Другой год' },
+  ...years.map(y => ({ value: y, label: String(y) }))
+]
 </script>
 
 <template>
   <div class="date-input">
-    <UiSelect v-model="model.day" aria-label="День">
-      <option v-for="d in days" :key="d" :value="d">{{ d }}</option>
-    </UiSelect>
+    <UiSelect v-model="model.day" :options="dayOptions" aria-label="День" />
 
-    <UiSelect v-model="model.month" aria-label="Месяц">
-      <option v-for="(name, i) in MONTHS" :key="name" :value="i">{{ name }}</option>
-    </UiSelect>
+    <UiSelect v-model="model.month" :options="monthOptions" aria-label="Месяц" />
 
     <!-- Год: либо список, либо ручной ввод -->
-    <UiSelect v-if="!customMode" v-model="selectValue" aria-label="Год">
-      <option :value="CUSTOM">Другой год</option>
-      <option v-for="y in years" :key="y" :value="y">{{ y }}</option>
-    </UiSelect>
+    <UiSelect v-if="!customMode" v-model="selectValue" :options="yearOptions" aria-label="Год" />
 
     <div v-else class="year-wrap">
       <input
@@ -133,6 +141,10 @@ watch(maxDay, (max) => {
 }
 
 .year-wrap { position: relative; }
+
+@media (max-width: 480px) {
+  .date-input { grid-template-columns: 58px minmax(0, 1fr) 84px; gap: 6px; }
+}
 
 .year-input {
   width: 100%;

@@ -1,25 +1,16 @@
 <script setup lang="ts">
-import { ZODIAC, ZODIAC_ICONS, getSign } from '~/types/astro'
+import { ZODIAC, ZODIAC_ICONS } from '~/types/astro'
+import type { SelectOption } from '~/types/ui'
 
 const model = defineModel<number>({ required: true })
+
+const options: SelectOption<number>[] = ZODIAC.map((sign, i) => ({
+  value: i,
+  label: sign,
+  icon: ZODIAC_ICONS[sign]
+}))
 </script>
 
 <template>
-  <div class="row">
-    <img :src="ZODIAC_ICONS[getSign(model)]" alt="" width="32" height="32" class="icon" />
-    <UiSelect v-model="model" aria-label="Знак зодиака">
-      <option v-for="(sign, i) in ZODIAC" :key="sign" :value="i">{{ sign }}</option>
-    </UiSelect>
-  </div>
+  <UiSelect v-model="model" :options="options" aria-label="Знак зодиака" />
 </template>
-
-<style scoped>
-.row { display: flex; align-items: center; gap: 10px; }
-
-.icon {
-  flex-shrink: 0;
-  object-fit: contain;
-  filter: var(--icon-filter, invert(1));
-  transition: filter 0.3s ease;
-}
-</style>
