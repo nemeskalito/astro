@@ -1,13 +1,19 @@
 <script setup lang="ts">
+const { adaptive } = useIcons()
+
 useHead({
-  htmlAttrs: { lang: 'ru' },
+  htmlAttrs: {
+    lang: 'ru',
+    // Режим фильтра иконок выбранной темы (см. main.css)
+    'data-icons': computed(() => (adaptive.value ? 'adaptive' : 'fixed'))
+  },
   title: 'Астрологический калькулятор',
   link: [
     { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
     { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
     {
       rel: 'stylesheet',
-      href: 'https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&display=swap'
+      href: 'https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700&display=swap'
     }
   ],
   // Тема ставится до первой отрисовки — без вспышки неверной темы

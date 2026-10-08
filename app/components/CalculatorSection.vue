@@ -35,11 +35,13 @@ function onCalculate() {
 
 <template>
   <section class="calc glass" aria-labelledby="calc-title">
-    <h1 id="calc-title" class="title">Астрологический калькулятор</h1>
+    <header class="head">
+      <h1 id="calc-title" class="title">Астрологический калькулятор</h1>
+      <p class="subtitle">Гибридный метод прогностики</p>
+    </header>
 
-    <ResultDisplay :result="result" :error="error" />
-
-    <form class="form" @submit.prevent="onCalculate">
+    <div class="form-wrap">
+      <form class="form" @submit.prevent="onCalculate">
       <MethodSelector v-model="method" />
 
       <FormField label="Дата рождения">
@@ -59,28 +61,59 @@ function onCalculate() {
         </FormField>
       </div>
 
+      <FormField label="Тема иконок">
+        <IconThemeSelect />
+      </FormField>
+
       <FormField label="Градус положения">
         <DegreeInput v-model="position" />
       </FormField>
 
-      <UiButton type="submit" size="lg" class="submit">Рассчитать</UiButton>
-    </form>
+        <UiButton type="submit" size="lg" class="submit">Рассчитать</UiButton>
+      </form>
+    </div>
+
+    <div class="result-wrap">
+      <ResultDisplay :result="result" :error="error" />
+    </div>
   </section>
 </template>
 
 <style scoped>
 .calc {
-  width: min(520px, 100%);
+  width: min(920px, 100%);
   padding: 26px;
   display: grid;
-  gap: 20px;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
+  grid-template-areas:
+    "head head"
+    "form result";
+  gap: 20px 28px;
+  align-items: start;
+}
+
+.head { grid-area: head; display: grid; gap: 4px; }
+.form-wrap { grid-area: form; min-width: 0; }
+.result-wrap {
+  grid-area: result;
+  position: sticky;
+  top: 20px;
+  min-width: 0;
 }
 
 .title {
-  font-size: 17px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
   color: var(--text);
+}
+
+.subtitle {
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 0.01em;
+  color: var(--text-dim);
 }
 
 .form { display: grid; gap: 20px; }
@@ -92,6 +125,19 @@ function onCalculate() {
 }
 
 .submit { margin-top: 4px; width: 100%; }
+
+@media (max-width: 720px) {
+  .calc {
+    width: min(520px, 100%);
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "head"
+      "result"
+      "form";
+  }
+
+  .result-wrap { position: static; }
+}
 
 @media (max-width: 480px) {
   .calc { padding: 20px 16px; }

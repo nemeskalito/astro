@@ -56,10 +56,25 @@ function onKeydown(e: KeyboardEvent) {
   bottom: 4px;
   left: 4px;
   width: calc(50% - 4px);
+  overflow: hidden;
   border-radius: 10px;
-  background: var(--seg-thumb);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 4px 12px -4px rgba(0, 0, 0, 0.45);
+  background-image: var(--btn-bg-image);
+  background-size: cover;
+  background-position: center;
+  box-shadow:
+    0 0 0 1px var(--btn-edge),
+    inset 0 1px 0 var(--btn-rim),
+    inset 0 -2px 6px var(--btn-depth),
+    0 6px 14px -6px var(--btn-glow);
   transition: transform 0.28s cubic-bezier(0.3, 0.8, 0.3, 1);
+}
+
+.thumb::before {
+  content: '';
+  position: absolute;
+  inset: 1px 2px 50% 2px;
+  border-radius: 9px 9px 50% 50% / 100% 100% 30% 30%;
+  background: linear-gradient(180deg, var(--btn-gloss), rgba(255, 255, 255, 0.04));
 }
 
 .seg-btn {
@@ -75,5 +90,6 @@ function onKeydown(e: KeyboardEvent) {
 }
 
 .seg-btn:hover { color: var(--text-dim); }
-.seg-btn[aria-checked='true'] { color: var(--text); }
+.seg-btn[aria-checked='true']:hover { color: var(--btn-text); }
+.seg-btn[aria-checked='true'] { color: var(--btn-text); text-shadow: var(--btn-text-shadow); }
 </style>

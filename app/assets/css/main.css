@@ -6,7 +6,8 @@
   --bg-cell: #2a2e3d;
   --border: #383d50;
   --border-hover: #4a5068;
-  --icon-filter: invert(1);
+  --icon-adaptive-filter: invert(1);
+  --icon-filter: var(--icon-adaptive-filter);
 
   --text: #eceef7;
   --text-dim: #aab0c6;
@@ -33,17 +34,30 @@
   --seg-thumb: linear-gradient(180deg, #4b5072, #393d59);
   --display-bg: rgba(0, 0, 0, 0.28);
 
-  /* Глянцевая кнопка */
-  --btn-top: #b3a7ff;
-  --btn-bottom: #6650ee;
-  --btn-edge: #3c2fa8;
-  --btn-shadow: rgba(110, 90, 245, 0.55);
+  /* Кнопки — тёмная тема: фон из buttons/ghost.webp */
+  --btn-top: #687086;
+  --btn-bottom: #3c4255;
+  --btn-edge: rgba(255, 255, 255, 0.16);
+  --btn-gloss: rgba(255, 255, 255, 0.24);
+  --btn-rim: rgba(255, 255, 255, 0.3);
+  --btn-depth: rgba(0, 0, 0, 0.32);
+  --btn-glow: rgba(92, 101, 128, 0.4);
+  --btn-hover: 1.08;
   --btn-text: #ffffff;
+  --btn-text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
+  --btn-bg-image: url('/buttons/ghost.webp');
+  --btn-primary-bg: var(--btn-bg-image);
+  --btn-ghost-bg: var(--btn-bg-image);
+  --ghost-bg: var(--btn-bg-image);
+  --ghost-border: rgba(255, 255, 255, 0.15);
+  --ghost-shadow: 0 8px 20px -12px rgba(0, 0, 0, 0.65);
 
   /* Небо */
+  --sky-base: #000;
+  --sky-image: url('/background/stars.jpg');
+  --sky-overlay: transparent;
   --sky-glow: rgba(120, 100, 255, 0.28);
   --sky-glow-2: rgba(240, 200, 120, 0.1);
-  --stars: 0.5;
 
   --radius: 22px;
   --radius-sm: 12px;
@@ -57,7 +71,8 @@
   --bg-cell: #ffffff;
   --border: #dcd6c8;
   --border-hover: #b8b0a0;
-  --icon-filter: invert(0);
+  --icon-adaptive-filter: none;
+  --icon-filter: var(--icon-adaptive-filter);
 
   --text: #25253a;
   --text-dim: #565670;
@@ -83,15 +98,34 @@
   --seg-thumb: #ffffff;
   --display-bg: rgba(90, 62, 196, 0.06);
 
-  --btn-top: #9f8bf5;
-  --btn-bottom: #5a3ec4;
-  --btn-edge: #43299f;
-  --btn-shadow: rgba(90, 62, 196, 0.4);
+  /* Кнопки — светлая тема: фон из buttons/primary.webp */
+  --btn-top: #ffffff;
+  --btn-bottom: #dfe1e8;
+  --btn-edge: rgba(60, 64, 80, 0.24);
+  --btn-gloss: rgba(255, 255, 255, 0.82);
+  --btn-rim: rgba(255, 255, 255, 0.95);
+  --btn-depth: rgba(80, 84, 100, 0.14);
+  --btn-glow: rgba(70, 74, 92, 0.24);
+  --btn-hover: 1.03;
+  --btn-text: #292b38;
+  --btn-text-shadow: 0 1px 1px rgba(255, 255, 255, 0.65);
+  --btn-bg-image: url('/buttons/primary.webp');
+  --btn-primary-bg: var(--btn-bg-image);
+  --btn-ghost-bg: var(--btn-bg-image);
+  --ghost-bg: var(--btn-bg-image);
+  --ghost-border: rgba(90, 62, 196, 0.2);
+  --ghost-shadow: 0 8px 18px -12px rgba(70, 45, 170, 0.4);
 
+  --sky-base: #fff;
+  --sky-image: url('/background/stars.jpg');
+  --sky-overlay: rgba(255, 255, 255, 0.015);
   --sky-glow: rgba(150, 120, 255, 0.24);
   --sky-glow-2: rgba(240, 190, 110, 0.18);
-  --stars: 0;
 }
+
+/* Тема иконок: одноцветные чёрные иконки инвертируются, цветные показываются как есть */
+:root[data-icons='fixed'] { --icon-filter: none; }
+:root[data-icons='adaptive'] { --icon-filter: var(--icon-adaptive-filter); }
 
 * { box-sizing: border-box; }
 
@@ -114,31 +148,29 @@ h1, h2, h3, p { margin: 0; }
   outline-offset: 3px;
 }
 
-/* ---------- Фон: небо со свечением и звёздами ---------- */
+/* ---------- Фон проекта: изображение звёзд из public/background/stars.jpg ---------- */
 .sky {
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background:
-    radial-gradient(60% 50% at 50% -8%, var(--sky-glow), transparent 70%),
-    radial-gradient(40% 40% at 92% 32%, var(--sky-glow-2), transparent 70%),
-    var(--bg);
+  background-color: var(--sky-base);
+  background-image: var(--sky-image);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+:root[data-theme='light'] .sky {
+  filter: invert(1);
 }
 
 .sky::after {
   content: '';
   position: absolute;
   inset: 0;
-  opacity: var(--stars);
-  background-image:
-    radial-gradient(1px 1px at 24px 36px, #fff, transparent),
-    radial-gradient(1.5px 1.5px at 110px 90px, #d9d2ff, transparent),
-    radial-gradient(1px 1px at 180px 24px, #fff, transparent),
-    radial-gradient(1px 1px at 70px 170px, #ffeccc, transparent),
-    radial-gradient(1.5px 1.5px at 200px 150px, #fff, transparent);
-  background-size: 240px 200px;
-  mask-image: linear-gradient(180deg, #000 0%, transparent 85%);
+  background: var(--sky-overlay);
+  pointer-events: none;
 }
 
 /* ---------- Стеклянная панель ---------- */

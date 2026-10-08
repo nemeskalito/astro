@@ -1,10 +1,13 @@
 <script setup lang="ts" generic="T extends string | number">
 import type { SelectOption } from '~/types/ui'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   options: SelectOption<T>[]
   ariaLabel?: string
-}>()
+  showTriggerIcon?: boolean
+}>(), {
+  showTriggerIcon: true
+})
 const model = defineModel<T>({ required: true })
 
 const uid = useId()
@@ -19,6 +22,11 @@ const dropUp = ref(false)
 const selectedIdx = computed(() => props.options.findIndex(o => o.value === model.value))
 const selected = computed(() => props.options[selectedIdx.value])
 const optionId = (i: number) => `${uid}-opt-${i}`
+
+function iconStyle(option: SelectOption<T>) {
+  if (!option.iconFilter) return undefined
+  return { filter: option.iconFilter === 'adaptive' ? 'var(--icon-adaptive-filter)' : 'none' }
+}
 
 function scrollToActive() {
   nextTick(() => {
@@ -142,7 +150,7 @@ onBeforeUnmount(() => {
       @click="isOpen ? close() : openList()"
       @keydown="onKeydown"
     >
-      <img v-if="selected?.icon" :src="selected.icon" alt="" width="22" height="22" class="icon" />
+      <img v-if="props.showTriggerIcon && selected?.icon" :src="selected.icon" alt="" width="22" height="22" class="icon" :style="iconStyle(selected)" />
       <span class="label">{{ selected?.label }}</span>
       <svg class="chevron" viewBox="0 0 12 8" width="12" height="8" aria-hidden="true">
         <path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
@@ -172,7 +180,7 @@ onBeforeUnmount(() => {
           @pointermove="active = i"
           @click="choose(i)"
         >
-          <img v-if="option.icon" :src="option.icon" alt="" width="22" height="22" class="icon" />
+          <img v-if="option.icon" :src="option.icon" alt="" width="22" height="22" class="icon" :style="iconStyle(option)" />
           <span class="option-label">{{ option.label }}</span>
           <svg v-if="option.value === model" class="check" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
             <path d="m3 8.5 3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -214,7 +222,7 @@ onBeforeUnmount(() => {
 
 .label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-.icon { flex-shrink: 0; filter: var(--icon-filter, invert(1)); }
+.icon { flex-shrink: 0; object-fit: contain; }
 
 .chevron {
   position: absolute;

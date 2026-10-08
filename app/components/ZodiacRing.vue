@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { ZODIAC, ZODIAC_ICONS } from '~/types/astro'
+import { ZODIAC } from '~/types/astro'
+
+const { zodiacIcon, zodiacIconAdaptive } = useIcons()
 </script>
 
 <template>
@@ -9,7 +11,7 @@ import { ZODIAC, ZODIAC_ICONS } from '~/types/astro'
         <div class="upright">
           <div class="counter">
             <span class="chip">
-              <img :src="ZODIAC_ICONS[sign]" alt="" width="22" height="22" />
+              <img :src="zodiacIcon(sign)" :style="{ filter: zodiacIconAdaptive(sign) ? 'var(--icon-adaptive-filter)' : 'none' }" alt="" width="22" height="22" />
             </span>
           </div>
         </div>
@@ -76,7 +78,7 @@ import { ZODIAC, ZODIAC_ICONS } from '~/types/astro'
   backdrop-filter: blur(8px);
 }
 
-.chip img { filter: var(--icon-filter, invert(1)); }
+.chip img { object-fit: contain; }
 
 /* Центральная глянцевая «планета» */
 .orb {

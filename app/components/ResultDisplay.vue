@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { PLANET_ICONS, ZODIAC_ICONS } from '~/types/astro'
 import type { CalculationResult } from '~/types/astro'
 import { formatDms } from '~/composables/useAstroCalc'
 
@@ -7,6 +6,8 @@ defineProps<{
   result: CalculationResult | null
   error?: string
 }>()
+
+const { planetIcon, zodiacIcon, planetIconAdaptive, zodiacIconAdaptive } = useIcons()
 </script>
 
 <template>
@@ -16,12 +17,12 @@ defineProps<{
     <Transition v-else name="swap" mode="out-in">
       <div v-if="result" :key="`${result.planet}-${result.sign}-${formatDms(result.position)}`" class="data">
         <p class="meta">
-          <img :src="PLANET_ICONS[result.planet]" alt="" width="20" height="20" />
+          <img :src="planetIcon(result.planet)" :style="{ filter: planetIconAdaptive(result.planet) ? 'var(--icon-adaptive-filter)' : 'none' }" alt="" width="20" height="20" />
           <span class="planet">{{ result.planet }}</span>
         </p>
         <p class="pos">{{ formatDms(result.position) }}</p>
         <p class="meta sign">
-          <img :src="ZODIAC_ICONS[result.sign]" alt="" width="20" height="20" />
+          <img :src="zodiacIcon(result.sign)" :style="{ filter: zodiacIconAdaptive(result.sign) ? 'var(--icon-adaptive-filter)' : 'none' }" alt="" width="20" height="20" />
           {{ result.sign }}
         </p>
       </div>
@@ -55,7 +56,7 @@ defineProps<{
   font-weight: 500;
 }
 
-.meta img { filter: var(--icon-filter, invert(1)); }
+.meta img { object-fit: contain; }
 .planet { color: var(--gold); }
 .sign { color: var(--accent); }
 

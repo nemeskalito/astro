@@ -45,7 +45,9 @@ li + li { border-top: 1px solid var(--glass-border); }
   border-radius: 50%;
   font-weight: 650;
   color: var(--btn-text);
-  background: linear-gradient(180deg, var(--btn-top), var(--btn-bottom));
+  background-image: var(--btn-bg-image);
+  background-size: cover;
+  background-position: center;
   box-shadow: 0 0 0 1px var(--btn-edge), inset 0 1px 0 rgba(255, 255, 255, 0.55), 0 8px 18px -8px var(--btn-shadow);
 }
 

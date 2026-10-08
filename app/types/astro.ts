@@ -1,30 +1,5 @@
 export type Method = 'direct' | 'reverse'
 
-export const PLANET_ICONS: Record<Planet, string> = {
-  Sun: '/planets/sun.webp',
-  Moon: '/planets/moon.webp',
-  Mercury: '/planets/mercury.webp',
-  Venus: '/planets/venus.webp',
-  Mars: '/planets/mars.webp',
-  Jupiter: '/planets/jupiter.webp',
-  Saturn: '/planets/saturn.webp'
-}
-
-export const ZODIAC_ICONS: Record<ZodiacSign, string> = {
-  Aries: '/zodiac/aries.webp',
-  Taurus: '/zodiac/taurus.webp',
-  Gemini: '/zodiac/gemini.webp',
-  Cancer: '/zodiac/cancer.webp',
-  Leo: '/zodiac/leo.webp',
-  Virgo: '/zodiac/virgo.webp',
-  Libra: '/zodiac/libra.webp',
-  Scorpio: '/zodiac/scorpio.webp',
-  Sagittarius: '/zodiac/sagittarius.webp',
-  Capricorn: '/zodiac/capricorn.webp',
-  Aquarius: '/zodiac/aquarius.webp',
-  Pisces: '/zodiac/pisces.webp'
-}
-
 export const PLANETS = [
   'Mars', 'Sun', 'Venus', 'Mercury', 'Moon', 'Saturn', 'Jupiter'
 ] as const

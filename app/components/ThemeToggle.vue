@@ -33,23 +33,37 @@ const { theme, toggle } = useTheme()
 
 <style scoped>
 .theme-toggle {
+  position: relative;
+  isolation: isolate;
   width: 42px;
   height: 42px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--field-bg);
-  border: 1px solid var(--field-border);
+  overflow: hidden;
+  background: var(--ghost-bg);
+  border: 0;
   border-radius: 50%;
   color: var(--text-dim);
   cursor: pointer;
-  box-shadow: inset 0 1px 0 var(--glass-hi);
-  transition: color 0.2s, border-color 0.2s, transform 0.15s;
+  box-shadow: 0 0 0 1px var(--ghost-border), inset 0 1px 0 var(--glass-hi), var(--ghost-shadow);
+  transition: color 0.2s, box-shadow 0.2s, transform 0.15s;
+}
+
+/* Верхний блик, как у основной кнопки */
+.theme-toggle::before {
+  content: '';
+  position: absolute;
+  inset: 1px 3px 50% 3px;
+  z-index: -1;
+  border-radius: 999px 999px 50% 50% / 100% 100% 30% 30%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent);
+  pointer-events: none;
 }
 
 .theme-toggle:hover {
   color: var(--accent);
-  border-color: var(--accent-strong);
+  box-shadow: 0 0 0 1px var(--accent-strong), inset 0 1px 0 var(--glass-hi), 0 10px 22px -10px var(--btn-glow);
 }
 
 .theme-toggle:active { transform: scale(0.94); }
