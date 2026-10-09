@@ -9,15 +9,10 @@ const model = computed({
 })
 
 const options = computed<SelectOption<string>[]>(() =>
-  themeNames.map(name => ({
-    value: name,
-    label: name,
-    icon: previewIcon(name),
-    iconFilter: isAdaptive(name) ? 'adaptive' : 'none'
-  }))
+  themeNames.map(name => ({ value: name, label: name }))
 )
 </script>
 
 <template>
-  <UiSelect v-model="model" :options="options" aria-label="Тема иконок" />
+  <UiSelect v-model="model" :options="options" aria-label="Тема знаков" />
 </template>

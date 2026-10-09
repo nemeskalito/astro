@@ -6,9 +6,9 @@ import { calculatePosition } from '~/composables/useAstroCalc'
 const method = ref<Method>('direct')
 const birth = ref({ day: 1, month: 0, year: 2000 })
 const event = ref({ day: 1, month: 0, year: 2000 })
-const planetIdx = ref(2)
-const signIdx = ref(4)
-const position = ref<DMS>({ degrees: 14, minutes: 38, seconds: 4 })
+const planetIdx = ref(0)
+const signIdx = ref(0)
+const position = ref<DMS>({ degrees: 0, minutes: 0, seconds: 0 })
 
 const result = ref<CalculationResult | null>(null)
 const error = ref('')
@@ -61,13 +61,14 @@ function onCalculate() {
         </FormField>
       </div>
 
-      <FormField label="Тема иконок">
-        <IconThemeSelect />
-      </FormField>
-
-      <FormField label="Градус положения">
-        <DegreeInput v-model="position" />
-      </FormField>
+      <div class="pair lower-pair">
+        <FormField label="Градус положения">
+          <DegreeInput v-model="position" />
+        </FormField>
+        <FormField label="Тема знаков">
+          <IconThemeSelect />
+        </FormField>
+      </div>
 
         <UiButton type="submit" size="lg" class="submit">Рассчитать</UiButton>
       </form>
@@ -84,7 +85,7 @@ function onCalculate() {
   width: min(920px, 100%);
   padding: 26px;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 360px);
   grid-template-areas:
     "head head"
     "form result";
@@ -117,6 +118,7 @@ function onCalculate() {
 }
 
 .form { display: grid; gap: 20px; }
+.lower-pair { align-items: start; }
 
 .pair {
   display: grid;

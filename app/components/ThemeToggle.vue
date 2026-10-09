@@ -46,7 +46,7 @@ const { theme, toggle } = useTheme()
   border-radius: 50%;
   color: var(--text-dim);
   cursor: pointer;
-  box-shadow: 0 0 0 1px var(--ghost-border), inset 0 1px 0 var(--glass-hi), var(--ghost-shadow);
+  box-shadow: 0 0 0 1px var(--ghost-border);
   transition: color 0.2s, box-shadow 0.2s, transform 0.15s;
 }
 
@@ -57,7 +57,7 @@ const { theme, toggle } = useTheme()
   inset: 1px 3px 50% 3px;
   z-index: -1;
   border-radius: 999px 999px 50% 50% / 100% 100% 30% 30%;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent);
+  background: transparent;
   pointer-events: none;
 }
 

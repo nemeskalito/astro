@@ -11,9 +11,7 @@ const selectedIconFilter = computed(() => planetIconAdaptive(PLANETS[model.value
 const options = computed<SelectOption<number>[]>(() =>
   PLANETS.map((planet, i) => ({
     value: i,
-    label: planet,
-    icon: planetIcon(planet),
-    iconFilter: planetIconAdaptive(planet) ? 'adaptive' : 'none'
+    label: planet
   }))
 )
 </script>

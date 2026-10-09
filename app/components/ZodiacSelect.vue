@@ -11,9 +11,7 @@ const selectedIconFilter = computed(() => zodiacIconAdaptive(ZODIAC[model.value]
 const options = computed<SelectOption<number>[]>(() =>
   ZODIAC.map((sign, i) => ({
     value: i,
-    label: sign,
-    icon: zodiacIcon(sign),
-    iconFilter: zodiacIconAdaptive(sign) ? 'adaptive' : 'none'
+    label: sign
   }))
 )
 </script>

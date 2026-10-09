@@ -11,7 +11,9 @@ const { planetIcon, zodiacIcon, planetIconAdaptive, zodiacIconAdaptive } = useIc
 </script>
 
 <template>
-  <div class="display" aria-live="polite">
+  <div class="result-panel" aria-live="polite">
+    <h2 class="result-heading">Градус и знак положения планеты на дату события</h2>
+    <div class="display">
     <p v-if="error" class="error" role="alert">{{ error }}</p>
 
     <Transition v-else name="swap" mode="out-in">
@@ -32,10 +34,16 @@ const { planetIcon, zodiacIcon, planetIconAdaptive, zodiacIconAdaptive } = useIc
         <p class="hint">Результат появится здесь</p>
       </div>
     </Transition>
+    </div>
   </div>
 </template>
 
 <style scoped>
+.result-panel { display: grid; gap: 12px; }
+.result-heading { font-size: 16px; line-height: 1.35; font-weight: 650; text-align: center; color: var(--text); }
+.data .meta { font-size: 17px; }
+.data .meta img { width: 26px; height: 26px; }
+.data .pos { font-size: clamp(38px, 9vw, 48px); }
 .display {
   display: grid;
   place-items: center;
@@ -52,8 +60,8 @@ const { planetIcon, zodiacIcon, planetIconAdaptive, zodiacIconAdaptive } = useIc
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 15px;
-  font-weight: 500;
+  font-size: 17px;
+  font-weight: 600;
 }
 
 .meta img { object-fit: contain; }

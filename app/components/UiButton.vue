@@ -43,7 +43,7 @@ withDefaults(
   inset: 1px 2px 48% 2px;
   z-index: -1;
   border-radius: 999px 999px 50% 50% / 100% 100% 30% 30%;
-  background: linear-gradient(180deg, var(--btn-gloss), rgba(255, 255, 255, 0.04));
+  background: transparent;
   pointer-events: none;
 }
 
@@ -69,11 +69,7 @@ withDefaults(
   color: var(--btn-text);
   text-shadow: var(--btn-text-shadow);
   background: var(--btn-primary-bg);
-  box-shadow:
-    0 0 0 1px var(--btn-edge),
-    inset 0 1px 0 var(--btn-rim),
-    inset 0 -2px 6px var(--btn-depth),
-    0 10px 24px -12px var(--btn-glow);
+  box-shadow: 0 0 0 1px var(--btn-edge);
  
 }
 
@@ -85,10 +81,7 @@ withDefaults(
 .btn--primary:active {
   transform: translateY(1px);
   filter: brightness(0.97);
-  box-shadow:
-    0 0 0 1px var(--btn-edge),
-    inset 0 2px 6px var(--btn-depth),
-    0 6px 14px -6px var(--btn-glow);
+  box-shadow: 0 0 0 1px var(--btn-edge);
 }
 
 /* ---------- Ghost ---------- */

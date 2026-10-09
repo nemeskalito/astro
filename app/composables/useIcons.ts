@@ -44,10 +44,8 @@ for (const [path, config] of Object.entries(configs)) {
   if (name && REGISTRY.has(name)) ensure(name).adaptive = config.adaptive === true
 }
 
-/** default — всегда первым, остальные по алфавиту */
-const THEME_NAMES = [...REGISTRY.keys()].sort((a, b) =>
-  a === DEFAULT_THEME ? -1 : b === DEFAULT_THEME ? 1 : a.localeCompare(b)
-)
+/** Все темы в алфавитном порядке; default выбирается по умолчанию, не по позиции в списке. */
+const THEME_NAMES = [...REGISTRY.keys()].sort((a, b) => a.localeCompare(b, 'ru', { sensitivity: 'base' }))
 
 export function useIcons() {
   const cookie = useCookie<string>(COOKIE, {
@@ -55,7 +53,7 @@ export function useIcons() {
     maxAge: 60 * 60 * 24 * 365,
     sameSite: 'lax'
   })
-  const stored = useState<string>('icon-theme', () => cookie.value)
+  const stored = useState<string>('icon-theme', () => REGISTRY.has(cookie.value) ? cookie.value : DEFAULT_THEME)
 
   const themeName = computed(() => (REGISTRY.has(stored.value) ? stored.value : DEFAULT_THEME))
   const theme = computed(() => REGISTRY.get(themeName.value))
