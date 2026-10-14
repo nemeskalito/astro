@@ -45,6 +45,10 @@
   --btn-hover: 1.08;
   --btn-text: #ffffff;
   --btn-text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
+  /* Объём кнопки «Рассчитать»: мягкий блик, нижний бортик, тень внутри */
+  --btn-sheen: rgba(255, 255, 255, 0.26);
+  --btn-ledge: #080a1a;
+  --btn-shade: rgba(4, 6, 26, 0.6);
   --btn-bg-image: url('/buttons/ghost.webp');
   --btn-primary-bg: var(--btn-bg-image);
   --btn-ghost-bg: var(--btn-bg-image);
@@ -109,6 +113,10 @@
   --btn-hover: 1.03;
   --btn-text: #292b38;
   --btn-text-shadow: 0 1px 1px rgba(255, 255, 255, 0.65);
+  /* Объём кнопки «Рассчитать»: мягкий блик, нижний бортик, тень внутри */
+  --btn-sheen: rgba(255, 255, 255, 0.62);
+  --btn-ledge: #aab0c6;
+  --btn-shade: rgba(92, 98, 140, 0.34);
   --btn-bg-image: url('/buttons/primary.webp');
   --btn-primary-bg: var(--btn-bg-image);
   --btn-ghost-bg: var(--btn-bg-image);

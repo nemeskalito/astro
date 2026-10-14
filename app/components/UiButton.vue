@@ -30,7 +30,7 @@ withDefaults(
   letter-spacing: 0.01em;
   white-space: nowrap;
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.25s ease, filter 0.25s ease;
+  transition: transform 0.12s ease, box-shadow 0.18s ease, filter 0.25s ease;
 }
 
 .btn--md { padding: 13px 22px; }
@@ -64,24 +64,51 @@ withDefaults(
 
 .btn:hover::after { left: 130%; }
 
-/* ---------- Primary ---------- */
+/* ---------- Primary: «физическая клавиша» ----------
+   Фон-картинка остаётся из токенов темы, объём собран из слоёв:
+   фаска сверху, тень внутри снизу, нижний бортик и мягкая тень снаружи. */
 .btn--primary {
   color: var(--btn-text);
   text-shadow: var(--btn-text-shadow);
   background: var(--btn-primary-bg);
-  box-shadow: 0 0 0 1px var(--btn-edge);
- 
+  box-shadow:
+    0 0 0 1px var(--btn-edge),
+    inset 0 1px 1px var(--btn-rim),
+    inset 0 -9px 16px -8px var(--btn-shade),
+    0 3px 0 var(--btn-ledge),
+    0 10px 16px -6px rgba(0, 0, 0, 0.38),
+    0 20px 34px -14px var(--btn-glow);
+}
+
+/* Мягкий диффузный блик (не жёсткая «половинка», как у переключателя метода) */
+.btn--primary::before {
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(120% 130% at 26% -12%, var(--btn-sheen), transparent 60%);
 }
 
 .btn--primary:hover {
-  transform: translateY(-2px);
+  transform: translateY(-1px);
   filter: brightness(var(--btn-hover)) saturate(1.05);
+  box-shadow:
+    0 0 0 1px var(--btn-edge),
+    inset 0 1px 1px var(--btn-rim),
+    inset 0 -9px 16px -8px var(--btn-shade),
+    0 4px 0 var(--btn-ledge),
+    0 14px 20px -6px rgba(0, 0, 0, 0.4),
+    0 24px 38px -14px var(--btn-glow);
 }
 
+/* Нажатие: бортик «вдавливается», кнопка опускается на его высоту */
 .btn--primary:active {
-  transform: translateY(1px);
+  transform: translateY(3px);
   filter: brightness(0.97);
-  box-shadow: 0 0 0 1px var(--btn-edge);
+  box-shadow:
+    0 0 0 1px var(--btn-edge),
+    inset 0 1px 1px var(--btn-rim),
+    inset 0 -4px 10px -6px var(--btn-shade),
+    0 0 0 var(--btn-ledge),
+    0 3px 8px -4px rgba(0, 0, 0, 0.4);
 }
 
 /* ---------- Ghost ---------- */

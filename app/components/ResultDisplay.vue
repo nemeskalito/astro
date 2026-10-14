@@ -40,15 +40,15 @@ const { planetIcon, zodiacIcon, planetIconAdaptive, zodiacIconAdaptive } = useIc
 
 <style scoped>
 .result-panel { display: grid; gap: 12px; }
-.result-heading { font-size: 16px; line-height: 1.35; font-weight: 650; text-align: center; color: var(--text); }
-.data .meta { font-size: 17px; }
-.data .meta img { width: 26px; height: 26px; }
-.data .pos { font-size: clamp(38px, 9vw, 48px); }
+.result-heading { font-size: 17px; line-height: 1.35; font-weight: 650; text-align: center; color: var(--text); }
+.data .meta { font-size: 21px; }
+.data .meta img { width: 32px; height: 32px; }
+.data .pos { font-size: clamp(42px, 10vw, 56px); }
 .display {
   display: grid;
   place-items: center;
-  min-height: 152px;
-  padding: 20px;
+  min-height: 184px;
+  padding: 22px 16px;
   text-align: center;
   background: var(--display-bg);
   border: 1px solid var(--glass-border);
@@ -60,7 +60,7 @@ const { planetIcon, zodiacIcon, planetIconAdaptive, zodiacIconAdaptive } = useIc
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 17px;
+  font-size: 21px;
   font-weight: 600;
 }
 
@@ -70,7 +70,7 @@ const { planetIcon, zodiacIcon, planetIconAdaptive, zodiacIconAdaptive } = useIc
 
 .pos {
   margin: 8px 0 10px;
-  font-size: clamp(34px, 9vw, 44px);
+  font-size: clamp(42px, 10vw, 56px);
   font-weight: 500;
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
@@ -78,8 +78,8 @@ const { planetIcon, zodiacIcon, planetIconAdaptive, zodiacIconAdaptive } = useIc
 }
 
 .muted { color: var(--text-faint); margin-bottom: 4px; }
-.hint { font-size: 13px; color: var(--text-faint); }
-.error { color: var(--error); font-size: 15px; font-weight: 500; max-width: 32ch; }
+.hint { font-size: 14px; color: var(--text-faint); }
+.error { color: var(--error); font-size: 17px; font-weight: 500; max-width: 32ch; }
 
 .swap-enter-active, .swap-leave-active { transition: opacity 0.2s ease, transform 0.2s ease; }
 .swap-enter-from { opacity: 0; transform: translateY(6px); }
