@@ -7,24 +7,24 @@ defineProps<{
   error?: string
 }>()
 
-const { planetIcon, zodiacIcon, planetIconAdaptive, zodiacIconAdaptive } = useIcons()
+const { planetIcon, zodiacIcon, planetIconStyle, zodiacIconStyle } = useIcons()
 </script>
 
 <template>
   <div class="result-panel" aria-live="polite">
-    <h2 class="result-heading">Градус и знак положения планеты на дату события</h2>
+    <h2 class="result-heading">Градус и знак положения планеты на дату события:</h2>
     <div class="display">
     <p v-if="error" class="error" role="alert">{{ error }}</p>
 
     <Transition v-else name="swap" mode="out-in">
       <div v-if="result" :key="`${result.planet}-${result.sign}-${formatDms(result.position)}`" class="data">
         <p class="meta">
-          <img :src="planetIcon(result.planet)" :style="{ filter: planetIconAdaptive(result.planet) ? 'var(--icon-adaptive-filter)' : 'none' }" alt="" width="20" height="20" />
+          <img :src="planetIcon(result.planet)" :style="planetIconStyle(result.planet)" alt="" width="20" height="20" />
           <span class="planet">{{ result.planet }}</span>
         </p>
         <p class="pos">{{ formatDms(result.position) }}</p>
         <p class="meta sign">
-          <img :src="zodiacIcon(result.sign)" :style="{ filter: zodiacIconAdaptive(result.sign) ? 'var(--icon-adaptive-filter)' : 'none' }" alt="" width="20" height="20" />
+          <img :src="zodiacIcon(result.sign)" :style="zodiacIconStyle(result.sign)" alt="" width="20" height="20" />
           {{ result.sign }}
         </p>
       </div>

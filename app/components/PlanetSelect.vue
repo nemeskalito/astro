@@ -3,10 +3,10 @@ import { PLANETS } from '~/types/astro'
 import type { SelectOption } from '~/types/ui'
 
 const model = defineModel<number>({ required: true })
-const { planetIcon, planetIconAdaptive } = useIcons()
+const { planetIcon, planetIconStyle } = useIcons()
 
 const selectedIcon = computed(() => planetIcon(PLANETS[model.value]!))
-const selectedIconFilter = computed(() => planetIconAdaptive(PLANETS[model.value]!) ? 'adaptive' : 'none')
+const selectedIconStyle = computed(() => planetIconStyle(PLANETS[model.value]!))
 
 const options = computed<SelectOption<number>[]>(() =>
   PLANETS.map((planet, i) => ({
@@ -21,7 +21,7 @@ const options = computed<SelectOption<number>[]>(() =>
     <img
       class="outside-icon"
       :src="selectedIcon"
-      :style="{ filter: selectedIconFilter === 'adaptive' ? 'var(--icon-adaptive-filter)' : 'none' }"
+      :style="selectedIconStyle"
       alt=""
       width="32"
       height="32"

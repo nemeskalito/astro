@@ -71,6 +71,8 @@ withDefaults(
   color: var(--btn-text);
   text-shadow: var(--btn-text-shadow);
   background: var(--btn-primary-bg);
+  background-size: var(--btn-primary-size, auto);
+  background-position: var(--btn-primary-pos, 0 0);
   box-shadow:
     0 0 0 1px var(--btn-edge),
     inset 0 1px 1px var(--btn-rim),

@@ -6,7 +6,7 @@
   --bg-cell: #2a2e3d;
   --border: #383d50;
   --border-hover: #4a5068;
-  --icon-adaptive-filter: invert(1);
+  --icon-adaptive-filter: brightness(0) invert(1); /* любой знак -> чисто белый */
   --icon-filter: var(--icon-adaptive-filter);
 
   --text: #eceef7;
@@ -49,8 +49,10 @@
   --btn-sheen: rgba(255, 255, 255, 0.26);
   --btn-ledge: #080a1a;
   --btn-shade: rgba(4, 6, 26, 0.6);
-  --btn-bg-image: url('/buttons/ghost.webp');
+  --btn-bg-image: url('/buttons/night.webp');
   --btn-primary-bg: var(--btn-bg-image);
+  --btn-primary-size: cover;
+  --btn-primary-pos: center;
   --btn-ghost-bg: var(--btn-bg-image);
   --ghost-bg: var(--btn-bg-image);
   --ghost-border: rgba(255, 255, 255, 0.15);
@@ -58,7 +60,7 @@
 
   /* Небо */
   --sky-base: #000;
-  --sky-image: url('/background/stars.jpg');
+  --sky-image: url('/background/sky.webp');
   --sky-overlay: transparent;
   --sky-glow: rgba(120, 100, 255, 0.28);
   --sky-glow-2: rgba(240, 200, 120, 0.1);
@@ -119,13 +121,15 @@
   --btn-shade: rgba(92, 98, 140, 0.34);
   --btn-bg-image: url('/buttons/primary.webp');
   --btn-primary-bg: var(--btn-bg-image);
+  --btn-primary-size: auto;
+  --btn-primary-pos: 0 0;
   --btn-ghost-bg: var(--btn-bg-image);
   --ghost-bg: var(--btn-bg-image);
   --ghost-border: rgba(90, 62, 196, 0.2);
   --ghost-shadow: 0 8px 18px -12px rgba(70, 45, 170, 0.4);
 
   --sky-base: #fff;
-  --sky-image: url('/background/stars.jpg');
+  --sky-image: url('/background/sky.webp');
   --sky-overlay: rgba(255, 255, 255, 0.015);
   --sky-glow: rgba(150, 120, 255, 0.24);
   --sky-glow-2: rgba(240, 190, 110, 0.18);
@@ -156,7 +160,7 @@ h1, h2, h3, p { margin: 0; }
   outline-offset: 3px;
 }
 
-/* ---------- Фон проекта: изображение звёзд из public/background/stars.jpg ---------- */
+/* ---------- Фон проекта: изображение звёзд из public/background/sky.webp ---------- */
 .sky {
   position: fixed;
   inset: 0;

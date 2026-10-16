@@ -3,10 +3,10 @@ import { ZODIAC } from '~/types/astro'
 import type { SelectOption } from '~/types/ui'
 
 const model = defineModel<number>({ required: true })
-const { zodiacIcon, zodiacIconAdaptive } = useIcons()
+const { zodiacIcon, zodiacIconStyle } = useIcons()
 
 const selectedIcon = computed(() => zodiacIcon(ZODIAC[model.value]!))
-const selectedIconFilter = computed(() => zodiacIconAdaptive(ZODIAC[model.value]!) ? 'adaptive' : 'none')
+const selectedIconStyle = computed(() => zodiacIconStyle(ZODIAC[model.value]!))
 
 const options = computed<SelectOption<number>[]>(() =>
   ZODIAC.map((sign, i) => ({
@@ -21,7 +21,7 @@ const options = computed<SelectOption<number>[]>(() =>
     <img
       class="outside-icon"
       :src="selectedIcon"
-      :style="{ filter: selectedIconFilter === 'adaptive' ? 'var(--icon-adaptive-filter)' : 'none' }"
+      :style="selectedIconStyle"
       alt=""
       width="32"
       height="32"
