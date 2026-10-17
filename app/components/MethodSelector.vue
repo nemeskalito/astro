@@ -69,13 +69,7 @@ function onKeydown(e: KeyboardEvent) {
   transition: transform 0.28s cubic-bezier(0.3, 0.8, 0.3, 1);
 }
 
-.thumb::before {
-  content: '';
-  position: absolute;
-  inset: 1px 2px 50% 2px;
-  border-radius: 9px 9px 50% 50% / 100% 100% 30% 30%;
-  background: linear-gradient(180deg, var(--btn-gloss), rgba(255, 255, 255, 0.04));
-}
+
 
 .seg-btn {
   position: relative;

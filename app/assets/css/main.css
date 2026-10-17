@@ -49,7 +49,7 @@
   --btn-sheen: rgba(255, 255, 255, 0.09);
   --btn-ledge: #080a1a;
   --btn-shade: rgba(4, 6, 26, 0.3);
-  --btn-bg-image: url('/buttons/night.webp');
+  --btn-bg-image: url('/buttons/ghost.webp');
   --btn-primary-bg: var(--btn-bg-image);
   --btn-primary-size: cover;
   --btn-primary-pos: center;
