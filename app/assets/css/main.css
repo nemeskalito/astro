@@ -46,13 +46,15 @@
   --btn-text: #ffffff;
   --btn-text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
   /* Объём кнопки «Рассчитать»: мягкий блик, нижний бортик, тень внутри */
-  --btn-sheen: rgba(255, 255, 255, 0.26);
+  --btn-sheen: rgba(255, 255, 255, 0.09);
   --btn-ledge: #080a1a;
-  --btn-shade: rgba(4, 6, 26, 0.6);
+  --btn-shade: rgba(4, 6, 26, 0.3);
   --btn-bg-image: url('/buttons/night.webp');
   --btn-primary-bg: var(--btn-bg-image);
   --btn-primary-size: cover;
   --btn-primary-pos: center;
+  /* Подложка «Прямой / Обратный» — прежний космос, отдельно от кнопки «Рассчитать» */
+  --btn-thumb-bg: url('/buttons/ghost.webp');
   --btn-ghost-bg: var(--btn-bg-image);
   --ghost-bg: var(--btn-bg-image);
   --ghost-border: rgba(255, 255, 255, 0.15);
@@ -123,6 +125,7 @@
   --btn-primary-bg: var(--btn-bg-image);
   --btn-primary-size: auto;
   --btn-primary-pos: 0 0;
+  --btn-thumb-bg: var(--btn-bg-image);
   --btn-ghost-bg: var(--btn-bg-image);
   --ghost-bg: var(--btn-bg-image);
   --ghost-border: rgba(90, 62, 196, 0.2);

@@ -58,7 +58,7 @@ function onKeydown(e: KeyboardEvent) {
   width: calc(50% - 4px);
   overflow: hidden;
   border-radius: 10px;
-  background-image: var(--btn-bg-image);
+  background-image: var(--btn-thumb-bg, var(--btn-bg-image));
   background-size: cover;
   background-position: center;
   box-shadow:
